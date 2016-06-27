@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "WeatherCell.h"
+#import "Place.h"
 
 @interface ViewController ()
 
@@ -41,7 +42,7 @@
     dayArray = [[NSMutableArray alloc]init];
     weatherImgArray = [[NSMutableArray alloc]init];
     backgroundImgArray = [[NSMutableArray alloc]init];
-    
+    //placeArray = [[NSMutableArray alloc]init];
     
     NSString *urlString = [NSString stringWithFormat:@"https://api.forecast.io/forecast/1d3cd010bfb57527975741a9c73b7cb2/49.553517,25.594767"];
     
@@ -152,6 +153,23 @@
     else {
         
     }
+    /*
+    NSArray *myFavoriteScreenArray = [NSArray arrayWithObjects:<#(nonnull id), ...#>, nil]
+    NSUserDefaults *favorites = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoritesScreen;
+    
+    if ([favorites objectForKey:@favoritesScreen] == nil) {
+        NSMutableArray *favoritesArray = [[NSMutableArray alloc]init];
+        [favorites setObject:favoritesArray forKey:@favoritesScreen];
+        [favoritesArray release];
+    }
+    NSMutableArray *tempArray = [[favorites objectForKey:@favoritesScreen] mutableCopy];
+    favoritesScreen = tempArray;
+    [tempArray release];
+    [favoritesScreen addObject:[];
+    */
+    
+    
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -257,12 +275,18 @@
 }
 */
 
+/*
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
     CLLocation *location = [locations lastObject];
     NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
 
 }
+*/
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

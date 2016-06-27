@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84031D7D1D211C150052B13E /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 84031D7C1D211C150052B13E /* Place.m */; };
+		84031D801D2149800052B13E /* SearchBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84031D7F1D2149800052B13E /* SearchBarViewController.m */; };
 		841807A31CF6F77000AE8E15 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841807A21CF6F77000AE8E15 /* CoreLocation.framework */; };
 		841807A51CF6F78100AE8E15 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 841807A41CF6F78100AE8E15 /* MapKit.framework */; };
 		84A9C6D41CF49D1400D758E4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A9C6D31CF49D1400D758E4 /* main.m */; };
@@ -47,6 +49,10 @@
 		03B779D5A7D47FDD571095D3 /* Pods-WeatherApp2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp2.0.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp2.0/Pods-WeatherApp2.0.release.xcconfig"; sourceTree = "<group>"; };
 		446F6CE0B6D4145A05EAD7C4 /* Pods_WeatherApp2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75073C6B31F04843DE0720CC /* Pods-WeatherApp2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp2.0.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp2.0/Pods-WeatherApp2.0.debug.xcconfig"; sourceTree = "<group>"; };
+		84031D7B1D211C150052B13E /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
+		84031D7C1D211C150052B13E /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
+		84031D7E1D2149800052B13E /* SearchBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarViewController.h; sourceTree = "<group>"; };
+		84031D7F1D2149800052B13E /* SearchBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchBarViewController.m; sourceTree = "<group>"; };
 		841807A21CF6F77000AE8E15 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		841807A41CF6F78100AE8E15 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		84A9C6CF1CF49D1400D758E4 /* WeatherApp2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +158,10 @@
 				84A9C6D91CF49D1400D758E4 /* ViewController.m */,
 				84A9C7081CF49D9400D758E4 /* WeatherCell.h */,
 				84A9C7091CF49D9400D758E4 /* WeatherCell.m */,
+				84031D7B1D211C150052B13E /* Place.h */,
+				84031D7C1D211C150052B13E /* Place.m */,
+				84031D7E1D2149800052B13E /* SearchBarViewController.h */,
+				84031D7F1D2149800052B13E /* SearchBarViewController.m */,
 				84A9C6DB1CF49D1400D758E4 /* Main.storyboard */,
 				84A9C6E11CF49D1400D758E4 /* Assets.xcassets */,
 				84A9C6E31CF49D1400D758E4 /* LaunchScreen.storyboard */,
@@ -379,7 +389,9 @@
 			files = (
 				84A9C6E01CF49D1400D758E4 /* WeatherApp2_0.xcdatamodeld in Sources */,
 				84A9C6DA1CF49D1400D758E4 /* ViewController.m in Sources */,
+				84031D801D2149800052B13E /* SearchBarViewController.m in Sources */,
 				84A9C70A1CF49D9400D758E4 /* WeatherCell.m in Sources */,
+				84031D7D1D211C150052B13E /* Place.m in Sources */,
 				84A9C6D71CF49D1400D758E4 /* AppDelegate.m in Sources */,
 				84A9C6D41CF49D1400D758E4 /* main.m in Sources */,
 			);
