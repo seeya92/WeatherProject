@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "WeatherCell.h"
 #import "Place.h"
-
+#import "SearchBarViewController.h"
 @interface ViewController ()
 
 @end
@@ -44,7 +44,28 @@
     backgroundImgArray = [[NSMutableArray alloc]init];
     //placeArray = [[NSMutableArray alloc]init];
     
-    NSString *urlString = [NSString stringWithFormat:@"https://api.forecast.io/forecast/1d3cd010bfb57527975741a9c73b7cb2/49.553517,25.594767"];
+    /*
+    NSArray *myFavoriteScreenArray = [NSArray arrayWithObjects:<#(nonnull id), ...#>, nil]
+    NSUserDefaults *favorites = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoritesScreen;
+    
+    if ([favorites objectForKey:@favoritesScreen] == nil) {
+        NSMutableArray *favoritesArray = [[NSMutableArray alloc]init];
+        [favorites setObject:favoritesArray forKey:@favoritesScreen];
+        [favoritesArray release];
+    }
+    NSMutableArray *tempArray = [[favorites objectForKey:@favoritesScreen] mutableCopy];
+    favoritesScreen = tempArray;
+    [tempArray release];
+    [favoritesScreen addObject:[];
+    */
+    
+    
+}
+
+- (void)getLocationLatitude:(NSString*)lat andLongtitude:(NSString*)lon{
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://api.forecast.io/forecast/1d3cd010bfb57527975741a9c73b7cb2/%@,%@",lat,lon];
     
     NSError *error;
     NSURLResponse *response;
@@ -153,23 +174,6 @@
     else {
         
     }
-    /*
-    NSArray *myFavoriteScreenArray = [NSArray arrayWithObjects:<#(nonnull id), ...#>, nil]
-    NSUserDefaults *favorites = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *favoritesScreen;
-    
-    if ([favorites objectForKey:@favoritesScreen] == nil) {
-        NSMutableArray *favoritesArray = [[NSMutableArray alloc]init];
-        [favorites setObject:favoritesArray forKey:@favoritesScreen];
-        [favoritesArray release];
-    }
-    NSMutableArray *tempArray = [[favorites objectForKey:@favoritesScreen] mutableCopy];
-    favoritesScreen = tempArray;
-    [tempArray release];
-    [favoritesScreen addObject:[];
-    */
-    
-    
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -190,6 +194,35 @@
             break;
     }
 }
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    if (self.selectedPlace != nil) {
+        NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyBLI_E0ymJCvHTz-29NszlLKp5IZnK1OQk", self.selectedPlace.reference];
+        
+        NSError *error;
+        NSURLResponse *response;
+        NSData* data = [NSURLConnection sendSynchronousRequest:
+                        [NSURLRequest requestWithURL:
+                         [NSURL URLWithString:urlString]]
+                                             returningResponse:&response
+                                                         error:&error];
+        
+        if (data) {
+            NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSArray *array = jsonData[@"address_components"];
+            for (NSDictionary *result in array) {
+                NSString *geometry = [result valueForKey:@"geometry"][0][@"value"];
+                NSString *location = [result valueForKey:@"location"];
+            }
+            [self.tableView reloadData];
+        }
+
+    }
+}
+
+
+
 
 -(void)viewDidAppear:(BOOL)animated {
     [self.tableView reloadData];
@@ -252,11 +285,6 @@
     return shortCut;
 }
 
--(void)newWeatherRequestWithLocationCoords:(CLLocationCoordinate2D)coords {
-    
-    
-    
-}
 
 - (NSString *)getCelsius:(float)fahrenheit {
     
@@ -275,14 +303,16 @@
 }
 */
 
-/*
+
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
     CLLocation *location = [locations lastObject];
-    NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
-
+    NSNumber *lat = [NSNumber numberWithDouble:location.coordinate.latitude];
+    NSNumber *lon = [NSNumber numberWithDouble:location.coordinate.longitude];
+    [self getLocationLatitude:[lat stringValue] andLongtitude:[lon stringValue]];
+    [manager stopUpdatingLocation];
 }
-*/
+
 
 
 

@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-@interface Place : NSObject {
-    NSMutableArray *placeArray;
-}
+@interface Place : NSObject
 
 @property (weak, nonatomic) NSString *name;
-@property (weak, nonatomic) CLLocation *placeId;
+@property (weak, nonatomic) NSString *reference;
 
 @end

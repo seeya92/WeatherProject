@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchBarViewController : UIViewController
+@interface SearchBarViewController : UIViewController {
+    NSMutableArray *placesArray;
+}
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Place.h"
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate> {
     
@@ -20,7 +21,7 @@
     CLLocationManager *locationManager;
 }
 
-
+@property(nonatomic,weak) Place * selectedPlace;
 @property(nonatomic,weak) IBOutlet UITableView *tableView;
 
 @end

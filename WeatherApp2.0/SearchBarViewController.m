@@ -7,8 +7,10 @@
 //
 
 #import "SearchBarViewController.h"
+#import "Place.h"
+#import "ViewController.h"
 
-@interface SearchBarViewController () <UISearchBarDelegate> {
+@interface SearchBarViewController () <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate> {
     
 }
 
@@ -20,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    placesArray = [[NSMutableArray alloc]init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,17 +43,51 @@
                                                      error:&error];
     
     if (data) {
-        
+        [placesArray removeAllObjects];
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         NSArray *array = jsonData[@"predictions"];
         for (NSDictionary *result in array) {
+            Place *place = [[Place alloc]init];
             NSString *name = [result valueForKey:@"terms"][0][@"value"];
-            NSString *placeId = [result valueForKey:@"place_id"];
-            NSString *lon = [result valueForKey:@"lon"];
+            NSString *reference = [result valueForKey:@"reference"];
+            place.name = name;
+            place.reference = reference;
+            [placesArray addObject:place];
         }
+        [self.tableView reloadData];
     }
     
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+}
+
+- (NSInteger)tableView:(UITableView*) tableView numberOfRowsInSection:(NSInteger)section{
+    return (NSInteger)placesArray.count;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlaceCell" forIndexPath:indexPath];
+    Place *place = placesArray[indexPath.row];
+    cell.textLabel.text = place.name;
+    return cell;
+}
+
+- (IBAction)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender{
+    ViewController *vca = (ViewController *)segue.destinationViewController;
+    NSIndexPath *selectedPath = [self.tableView indexPathForCell:sender];
+    Place *place = placesArray[selectedPath.row];
+    vca.selectedPlace = place;
+}
+
+
+    
+
+
 
 /*
 #pragma mark - Navigation

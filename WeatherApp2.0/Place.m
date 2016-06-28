@@ -10,7 +10,6 @@
 
 @implementation Place
 
-/*
-*/
+
 
 @end
