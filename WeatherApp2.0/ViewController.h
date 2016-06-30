@@ -20,7 +20,7 @@
     
     CLLocationManager *locationManager;
 }
-
+@property(weak, nonatomic) IBOutlet UINavigationItem *navigationBarTitle;
 @property(nonatomic,weak) Place * selectedPlace;
 @property(nonatomic,weak) IBOutlet UITableView *tableView;
 

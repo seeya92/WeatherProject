@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 @interface Place : NSObject
 
-@property (weak, nonatomic) NSString *name;
-@property (weak, nonatomic) NSString *reference;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSString *reference;
 
 @end

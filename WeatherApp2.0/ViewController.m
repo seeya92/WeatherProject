@@ -10,6 +10,9 @@
 #import "WeatherCell.h"
 #import "Place.h"
 #import "SearchBarViewController.h"
+
+
+
 @interface ViewController ()
 
 @end
@@ -35,6 +38,7 @@
      } else {
      [locationManager startUpdatingLocation]; //Will update location immediately
      }
+    
     
     
     maxTempArray = [[NSMutableArray alloc]init];
@@ -63,7 +67,47 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    if (self.selectedPlace != nil) {
+        NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyBLI_E0ymJCvHTz-29NszlLKp5IZnK1OQk", self.selectedPlace.reference];
+        self.navigationController.navigationBar.topItem.title = _selectedPlace.name;
+        NSError *error;
+        NSURLResponse *response;
+        NSData* data = [NSURLConnection sendSynchronousRequest:
+                        [NSURLRequest requestWithURL:
+                         [NSURL URLWithString:urlString]]
+                                             returningResponse:&response
+                                                         error:&error];
+        
+        if (data) {
+            NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            
+            NSDictionary *dictionary1 = jsonData[@"result"];
+            NSDictionary *dictionary2 = dictionary1[@"geometry"];
+            NSDictionary *location = dictionary2[@"location"];
+            self.navigationBarTitle.title = _selectedPlace.name;
+            [self getLocationLatitude:location[@"lat"] andLongtitude:location[@"lng"]];
+             
+            [self.tableView reloadData];
+        }
+        
+    }
+}
+
+
+
+
+-(void)viewDidAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 - (void)getLocationLatitude:(NSString*)lat andLongtitude:(NSString*)lon{
+    
+    [maxTempArray removeAllObjects];
+    [minTempArray removeAllObjects];
+    [dayArray removeAllObjects];
+    [weatherImgArray removeAllObjects];
+    [backgroundImgArray removeAllObjects];
     
     NSString *urlString = [NSString stringWithFormat:@"https://api.forecast.io/forecast/1d3cd010bfb57527975741a9c73b7cb2/%@,%@",lat,lon];
     
@@ -196,37 +240,7 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated {
-    if (self.selectedPlace != nil) {
-        NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyBLI_E0ymJCvHTz-29NszlLKp5IZnK1OQk", self.selectedPlace.reference];
-        
-        NSError *error;
-        NSURLResponse *response;
-        NSData* data = [NSURLConnection sendSynchronousRequest:
-                        [NSURLRequest requestWithURL:
-                         [NSURL URLWithString:urlString]]
-                                             returningResponse:&response
-                                                         error:&error];
-        
-        if (data) {
-            NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSArray *array = jsonData[@"address_components"];
-            for (NSDictionary *result in array) {
-                NSString *geometry = [result valueForKey:@"geometry"][0][@"value"];
-                NSString *location = [result valueForKey:@"location"];
-            }
-            [self.tableView reloadData];
-        }
 
-    }
-}
-
-
-
-
--(void)viewDidAppear:(BOOL)animated {
-    [self.tableView reloadData];
-}
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"WeatherCell";
@@ -293,14 +307,10 @@
     return returnString;
 }
 /*
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    CLLocation * currentLocation = [locations lastObject];
-    
-    if (currentLocation != nil) {
-        CLLocationCoordinate2D coords = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
-        [self newWeatherRequestWithLocationCoords:coords];
-    }
-}
+ - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+ NSLog(@"OldLocation %f %f", oldLocation.coordinate.latitude, oldLocation.coordinate.longitude);
+ NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+ }
 */
 
 
@@ -309,14 +319,14 @@
     CLLocation *location = [locations lastObject];
     NSNumber *lat = [NSNumber numberWithDouble:location.coordinate.latitude];
     NSNumber *lon = [NSNumber numberWithDouble:location.coordinate.longitude];
+    self.navigationBarTitle.title = _selectedPlace.name;
     [self getLocationLatitude:[lat stringValue] andLongtitude:[lon stringValue]];
     [manager stopUpdatingLocation];
 }
 
 
 
-
-
+     
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

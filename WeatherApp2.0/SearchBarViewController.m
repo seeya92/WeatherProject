@@ -48,7 +48,10 @@
         NSArray *array = jsonData[@"predictions"];
         for (NSDictionary *result in array) {
             Place *place = [[Place alloc]init];
-            NSString *name = [result valueForKey:@"terms"][0][@"value"];
+            NSArray *terms = result[@"terms"];
+            NSDictionary *placeValue = terms[0];
+            NSString *name = placeValue[@"value"];
+//            NSString *name = result[@"terms"][0][@"value"];
             NSString *reference = [result valueForKey:@"reference"];
             place.name = name;
             place.reference = reference;

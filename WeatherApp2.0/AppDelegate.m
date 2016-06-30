@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -17,6 +18,39 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    UIStoryboard *storyboard;
+    
+    storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController * leftSideNavController =
+    [storyboard instantiateViewControllerWithIdentifier:
+     @"leftViewController"];
+    
+    UIViewController * centerSideNavController =
+    [storyboard instantiateViewControllerWithIdentifier:
+     @"ViewController"];
+
+
+    self.drawerController = [[MMDrawerController alloc]
+     initWithCenterViewController:centerSideNavController
+     leftDrawerViewController:leftSideNavController
+    
+    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+    
+    [self.window setRootViewController:self.drawerController];
+    /* Optional - To define Drawer width */
+    [self.drawerController setMaximumRightDrawerWidth:280.0];
+    
+    [self.drawerController setMaximumLeftDrawerWidth:280.0];
+    
+    [self.window makeKeyAndVisible];
+    
+    
+    
+    
+    
     return YES;
 }
 
